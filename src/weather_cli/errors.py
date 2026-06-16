@@ -25,4 +25,30 @@ class LongitudeValidationError(Exception):
 def check_invalid_long(long):
     if (-180>long or 180<long):
         raise LongitudeValidationError(long)
+    
+class WeatherTimeoutrError(Exception):
+    def __init__(self, message, error_code = 408):
+        self.message = "API Timeout"
+        self.error_code = error_code
+        super().__init__(message)
         
+    def __str__(self):
+        return f"{self.message}. (Error code: {self.error_code})"
+    
+class WeatherAPIError(Exception):
+    def __init__(self, message, error_code = 502):
+        self.message = f"API returned bad status"
+        self.error_code = error_code
+        super().__init__(message)
+
+    def __str__(self):
+        return f"{self.message}. Error code {self.error_code}"
+    
+class WeatherDataError(Exception):
+    def __init__(self, message, error_code = 400):
+        self.message = f"Data error"
+        self.error_code = error_code
+        super().__init__(message)
+
+    def __str__(self):
+        return f"{self.message} Error code {self.error_code}"
